@@ -1,3 +1,5 @@
-
-
-
+* {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+}

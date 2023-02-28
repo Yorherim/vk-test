@@ -1,0 +1,141 @@
+.box {
+  display: flex;
+  justify-content: center;
+}
+
+.sapper {
+  padding-top: 100px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cells {
+  display: block;
+
+  .sub-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+}
+
+.icon {
+  background-image: url('./assets/sprite.png');
+  background-position: 0 0;
+
+  &__number {
+    height: 23px;
+    width: 13px;
+
+    &_one {
+      background-position: 0 0;
+    }
+    &_two {
+      background-position: -14px 0;
+    }
+    &_three {
+      background-position: -28px 0;
+    }
+    &_four {
+      background-position: -42px 0;
+    }
+    &_five {
+      background-position: -56px 0;
+    }
+    &_six {
+      background-position: -70px 0;
+    }
+    &_seven {
+      background-position: -84px 0;
+    }
+    &_eight {
+      background-position: -98px 0;
+    }
+    &_nine {
+      background-position: -112px 0;
+    }
+    &_zero {
+      background-position: -126px 0;
+    }
+  }
+
+  &__smile {
+    height: 26px;
+    width: 26px;
+
+    &_happy {
+      background-position: 0 -24px;
+    }
+    &_happy-clicked {
+      background-position: -27px -24px;
+    }
+    &_surprised {
+      background-position: -54px -24px;
+    }
+    &_with-glasses {
+      background-position: -81px -24px;
+    }
+    &_sad {
+      background-position: -108px -24px;
+    }
+  }
+
+  &__cell {
+    width: 16px;
+    height: 16px;
+
+    &_empty {
+      background-position: 0 -51px;
+    }
+    &_empty-clicked {
+      background-position: -17px -51px;
+    }
+    &_flag {
+      background-position: -34px -51px;
+    }
+    &_question {
+      background-position: -51px -51px;
+    }
+    &_question-clicked {
+      background-position: -68px -51px;
+    }
+    &_bomb {
+      background-position: -85px -51px;
+    }
+    &_bomb_red {
+      background-position: -102px -51px;
+    }
+    &_bomb_error {
+      background-position: -119px -51px;
+    }
+
+    &_one {
+      background-position: 0 -68px;
+    }
+    &_two {
+      background-position: -17px -68px;
+    }
+    &_three {
+      background-position: -34px -68px;
+    }
+    &_four {
+      background-position: -51px -68px;
+    }
+    &_five {
+      background-position: -68px -68px;
+    }
+    &_six {
+      background-position: -85px -68px;
+    }
+    &_seven {
+      background-position: -102px -68px;
+    }
+    &_eight {
+      background-position: -119px -68px;
+    }
+  }
+}
