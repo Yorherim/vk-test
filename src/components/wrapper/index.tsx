@@ -1,12 +1,20 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 import styles from './wrapper.module.scss';
 
-export const Wrapper: FC = () => {
+type WrapperProps = {
+  children: ReactNode[];
+};
+
+export const Wrapper: FC<WrapperProps> = ({ children }) => {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.box} />
-      <div className={styles.box} />
+      {children.map((child, i) => (
+        // children are static, so can safely use the index here
+        <div key={i} className={styles.box}>
+          {child}
+        </div>
+      ))}
     </div>
   );
 };
