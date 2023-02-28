@@ -1,0 +1,36 @@
+.number {
+  background-image: url('../../assets/sprite.png');
+  height: 23px;
+  width: 13px;
+
+  &__one {
+    background-position: 0 0;
+  }
+  &__two {
+    background-position: -14px 0;
+  }
+  &__three {
+    background-position: -28px 0;
+  }
+  &__four {
+    background-position: -42px 0;
+  }
+  &__five {
+    background-position: -56px 0;
+  }
+  &__six {
+    background-position: -70px 0;
+  }
+  &__seven {
+    background-position: -84px 0;
+  }
+  &__eight {
+    background-position: -98px 0;
+  }
+  &__nine {
+    background-position: -112px 0;
+  }
+  &__zero {
+    background-position: -126px 0;
+  }
+}

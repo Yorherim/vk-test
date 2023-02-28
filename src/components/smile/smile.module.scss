@@ -1,0 +1,25 @@
+.smile {
+  background-image: url('../../assets/sprite.png');
+  height: 26px;
+  width: 26px;
+
+  &__happy {
+    background-position: 0 -24px;
+  }
+
+  &__happy-clicked {
+    background-position: -27px -24px;
+  }
+
+  &__surprised {
+    background-position: -54px -24px;
+  }
+
+  &__with-glasses {
+    background-position: -81px -24px;
+  }
+
+  &__sad {
+    background-position: -108px -24px;
+  }
+}

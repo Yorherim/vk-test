@@ -1,5 +1,5 @@
 import './App.scss';
-import { Container } from './components';
+import { Cell, Container, Number, Smile } from './components';
 
 function App() {
   return (
@@ -8,46 +8,46 @@ function App() {
         <div className="box">
           <div className="sapper">
             <div className="row">
-              <div className="icon icon__number icon__number_one" />
-              <div className="icon icon__number icon__number_two" />
-              <div className="icon icon__number icon__number_three" />
-              <div className="icon icon__number icon__number_four" />
-              <div className="icon icon__number icon__number_five" />
-              <div className="icon icon__number icon__number_six" />
-              <div className="icon icon__number icon__number_seven" />
-              <div className="icon icon__number icon__number_eight" />
-              <div className="icon icon__number icon__number_nine" />
-              <div className="icon icon__number icon__number_zero" />
+              <Number number={1} />
+              <Number number={2} />
+              <Number number={3} />
+              <Number number={4} />
+              <Number number={5} />
+              <Number number={6} />
+              <Number number={7} />
+              <Number number={8} />
+              <Number number={9} />
+              <Number number={0} />
             </div>
 
             <div className="row">
-              <div className="icon icon__smile icon__smile_happy" />
-              <div className="icon icon__smile icon__smile_happy-clicked" />
-              <div className="icon icon__smile icon__smile_surprised" />
-              <div className="icon icon__smile icon__smile_with-glasses" />
-              <div className="icon icon__smile icon__smile_sad" />
+              <Smile smile="happy" />
+              <Smile smile="happy-clicked" />
+              <Smile smile="surprised" />
+              <Smile smile="with-glasses" />
+              <Smile smile="sad" />
             </div>
 
             <div className="row cells">
               <div className="sub-row">
-                <div className="icon icon__cell icon__cell_empty" />
-                <div className="icon icon__cell icon__cell_empty-clicked" />
-                <div className="icon icon__cell icon__cell_flag" />
-                <div className="icon icon__cell icon__cell_question" />
-                <div className="icon icon__cell icon__cell_question-clicked" />
-                <div className="icon icon__cell icon__cell_bomb" />
-                <div className="icon icon__cell icon__cell_bomb_red" />
-                <div className="icon icon__cell icon__cell_bomb_error" />
+                <Cell cell="empty" />
+                <Cell cell="empty-clicked" />
+                <Cell cell="flag" />
+                <Cell cell="question" />
+                <Cell cell="question-clicked" />
+                <Cell cell="bomb" />
+                <Cell cell="bomb-red" />
+                <Cell cell="bomb-error" />
               </div>
               <div className="sub-row">
-                <div className="icon icon__cell icon__cell_one" />
-                <div className="icon icon__cell icon__cell_two" />
-                <div className="icon icon__cell icon__cell_three" />
-                <div className="icon icon__cell icon__cell_four" />
-                <div className="icon icon__cell icon__cell_five" />
-                <div className="icon icon__cell icon__cell_six" />
-                <div className="icon icon__cell icon__cell_seven" />
-                <div className="icon icon__cell icon__cell_eight" />
+                <Cell cell={1} />
+                <Cell cell={2} />
+                <Cell cell={3} />
+                <Cell cell={4} />
+                <Cell cell={5} />
+                <Cell cell={6} />
+                <Cell cell={7} />
+                <Cell cell={8} />
               </div>
             </div>
           </div>

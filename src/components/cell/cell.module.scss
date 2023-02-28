@@ -1,0 +1,55 @@
+.cell {
+  background-image: url('../../assets/sprite.png');
+  width: 16px;
+  height: 16px;
+
+  &__empty {
+    background-position: 0 -51px;
+  }
+  &__empty-clicked {
+    background-position: -17px -51px;
+  }
+  &__flag {
+    background-position: -34px -51px;
+  }
+  &__question {
+    background-position: -51px -51px;
+  }
+  &__question-clicked {
+    background-position: -68px -51px;
+  }
+  &__bomb {
+    background-position: -85px -51px;
+  }
+  &__bomb-red {
+    background-position: -102px -51px;
+  }
+  &__bomb-error {
+    background-position: -119px -51px;
+  }
+
+  &__one {
+    background-position: 0 -68px;
+  }
+  &__two {
+    background-position: -17px -68px;
+  }
+  &__three {
+    background-position: -34px -68px;
+  }
+  &__four {
+    background-position: -51px -68px;
+  }
+  &__five {
+    background-position: -68px -68px;
+  }
+  &__six {
+    background-position: -85px -68px;
+  }
+  &__seven {
+    background-position: -102px -68px;
+  }
+  &__eight {
+    background-position: -119px -68px;
+  }
+}
