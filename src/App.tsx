@@ -1,5 +1,5 @@
 import './App.scss';
-import { Cell, Container, Number, Smile } from './components';
+import { Cell, Container, Number, Smile, Wrapper } from './components';
 
 function App() {
   return (
@@ -7,6 +7,7 @@ function App() {
       <Container>
         <div className="box">
           <div className="sapper">
+            <Wrapper />
             <div className="row">
               <Number number={1} />
               <Number number={2} />
