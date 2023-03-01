@@ -2,22 +2,29 @@
   background-image: url('../../assets/sprite.png');
   width: 16px;
   height: 16px;
-  //background-size: 200%;
 
   &__empty {
     background-position: 0 -51px;
-  }
-  &__empty-clicked {
-    background-position: -17px -51px;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      background-position: -17px -51px;
+    }
   }
   &__flag {
     background-position: -34px -51px;
   }
   &__question {
     background-position: -51px -51px;
-  }
-  &__question-clicked {
-    background-position: -68px -51px;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      background-position: -68px -51px;
+    }
   }
   &__bomb {
     background-position: -85px -51px;

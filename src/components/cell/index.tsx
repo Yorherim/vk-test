@@ -15,10 +15,8 @@ export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
     '8': styles.cell__eight,
 
     empty: styles.cell__empty,
-    'empty-clicked': styles['cell__empty-clicked'],
     flag: styles.cell__flag,
     question: styles.cell__question,
-    'question-clicked': styles['cell__question-clicked'],
     bomb: styles.cell__bomb,
     'bomb-red': styles['cell__bomb-red'],
     'bomb-error': styles['cell__bomb-error'],

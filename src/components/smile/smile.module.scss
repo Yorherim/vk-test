@@ -5,6 +5,13 @@
 
   &__happy {
     background-position: 0 -24px;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      background-position: -27px -24px;
+    }
   }
 
   &__happy-clicked {
