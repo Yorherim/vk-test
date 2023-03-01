@@ -14,6 +14,7 @@ export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
     '7': styles.cell__seven,
     '8': styles.cell__eight,
 
+    hide: styles.cell__hide,
     empty: styles.cell__empty,
     flag: styles.cell__flag,
     question: styles.cell__question,
@@ -22,5 +23,5 @@ export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
     'bomb-error': styles['cell__bomb-error'],
   };
 
-  return <div className={`${styles.cell} ${cellStyle[cell]}`} {...rest} />;
+  return <div className={`${styles.cell} ${cellStyle[cell]}`} {...rest} role="cell" />;
 };

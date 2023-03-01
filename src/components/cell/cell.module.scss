@@ -3,7 +3,7 @@
   width: 16px;
   height: 16px;
 
-  &__empty {
+  &__hide {
     background-position: 0 -51px;
 
     &:hover {
@@ -12,6 +12,9 @@
     &:active {
       background-position: -17px -51px;
     }
+  }
+  &__empty {
+    background-position: -17px -51px;
   }
   &__flag {
     background-position: -34px -51px;
