@@ -30,6 +30,16 @@
         "newlines-between": "always-and-inside-groups"
       }
     ],
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2,
+        "printWidth": 80,
+        "semi": true,
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    ],
     "import/prefer-default-export": 0,
     "react/function-component-definition": 0,
     "react/jsx-props-no-spreading": 0,
