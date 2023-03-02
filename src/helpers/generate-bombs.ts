@@ -1,13 +1,23 @@
 import { CONSTANTS } from '../app/types';
 
+/**
+ * function for generate bombs
+ *
+ * algorithm:
+ *
+ * 1 - create array with 256 elements
+ *
+ * 2 - get keys of the array => create array with indexes (0, 255)
+ *
+ * 3 - sort in any order
+ *
+ * 4 - find index of startCellIndex in sorting array
+ *
+ * 5 - return first 10 indexes of sorting array, or first 11 indexes (if startCellIndex will be in array)
+ * @param {number} startCellIndex cell first click
+ * @returns {number[]} array with 10 elements - indexes of array with 256 elements, where bombs will be located
+ */
 export const generateBombs = (startCellIndex: number) => {
-  // algorithm for generate bombs
-  // 1 - create Array with 256 elements
-  // 2 - get keys of the array => create array with indexes (0, 255)
-  // 3 - sort in any order
-  // 4 - find index of startCellIndex in sorting array
-  // 5 - return first 10 indexes of sorting array, or 11 without startCellIndex
-
   const arraySortKeys = [...Array(CONSTANTS.CELLS_COUNT).keys()] // 1 and 2
     .sort(() => Math.random() - 0.5); // 3
 
