@@ -3,7 +3,15 @@ import { FC } from 'react';
 import styles from './cell.module.scss';
 import { CellProps, CellStyle } from './types';
 
-export const Cell: FC<CellProps> = ({ cell, hide, className, ...rest }) => {
+export const Cell: FC<CellProps> = ({
+  cell,
+  hide,
+  cellIndex,
+  loseBombIndex,
+  resultGame,
+  className,
+  ...rest
+}) => {
   const cellStyle: CellStyle = {
     '1': styles.cell__one,
     '2': styles.cell__two,
@@ -22,9 +30,29 @@ export const Cell: FC<CellProps> = ({ cell, hide, className, ...rest }) => {
     'bomb-error': styles['cell__bomb-error'],
   };
 
+  const setCellStyle = () => {
+    if (loseBombIndex && cellIndex && loseBombIndex === cellIndex) {
+      return cellStyle['bomb-red'];
+    }
+
+    return cellStyle[cell];
+  };
+  const setHide = () => {
+    if (
+      resultGame === 'lose' &&
+      cell === 'bomb' &&
+      loseBombIndex &&
+      cellIndex &&
+      loseBombIndex !== cellIndex
+    ) {
+      return cellStyle.bomb;
+    }
+    return styles.cell__hide;
+  };
+
   return (
     <div
-      className={`${styles.cell} ${hide ? styles.cell__hide : cellStyle[cell]}`}
+      className={`${styles.cell} ${hide ? setHide() : setCellStyle()}`}
       {...rest}
       role="cell"
     />

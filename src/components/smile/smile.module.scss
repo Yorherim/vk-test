@@ -3,12 +3,13 @@
   height: 26px;
   width: 26px;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &__happy {
     background-position: 0 -24px;
 
-    &:hover {
-      cursor: pointer;
-    }
     &:active {
       background-position: -27px -24px;
     }

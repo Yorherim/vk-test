@@ -3,6 +3,13 @@ import { Playground } from '../../app/types';
 import { AdjacentCells } from './types';
 import { PlaygroundWithOnlyBombs } from '../generate-playground/types';
 
+/**
+ * function for get adjacent cells
+ *
+ * @param {number} cellIndex cell clicked
+ * @param {PlaygroundWithOnlyBombs | Playground} arr
+ * @returns AdjacentCells
+ */
 export const getAdjacentCells = (
   cellIndex: number,
   arr: PlaygroundWithOnlyBombs | Playground,
@@ -28,8 +35,8 @@ export const getAdjacentCells = (
       ? arr[cellIndex + 1]
       : null,
 
-    'bottom-left': checkRowAndColumn(cellIndex, cellIndex + 16, 'bottom-middle')
-      ? arr[cellIndex + 16]
+    'bottom-left': checkRowAndColumn(cellIndex, cellIndex + 15, 'bottom-left')
+      ? arr[cellIndex + 15]
       : null,
 
     'bottom-middle': checkRowAndColumn(

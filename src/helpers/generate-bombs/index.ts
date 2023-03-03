@@ -26,16 +26,16 @@ export const generateBombs = (startCellIndex: number) => {
   const indexOfStartCellIndex = arraySortKeys.indexOf(startCellIndex);
 
   // 5
-  if (indexOfStartCellIndex < 10) {
+  if (indexOfStartCellIndex < 36) {
     const arrBeforeStartCellIndex = arraySortKeys.slice(
       0,
       indexOfStartCellIndex,
     );
     const arrAfterStartCellIndex = arraySortKeys.slice(
       indexOfStartCellIndex + 1,
-      11,
+      37,
     );
     return [...arrBeforeStartCellIndex, ...arrAfterStartCellIndex];
   }
-  return arraySortKeys.slice(0, 10);
+  return arraySortKeys.slice(0, 36);
 };

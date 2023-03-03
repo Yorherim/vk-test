@@ -2,20 +2,17 @@ import { MouseEvent, useState } from 'react';
 
 import styles from './App.module.scss';
 import { Cell, Container, Dial, Smile, Wrapper } from '../components';
-import { generatePlayground } from '../helpers/generate-playground';
-import { CONSTANTS, Playground } from './types';
-import { openCells } from '../helpers/open-cells';
+import { generatePlayground, openCells } from '../helpers';
+import { CONSTANTS, Playground, ResultGame } from './types';
 
 function App() {
   const [startGame, setStartGame] = useState(false);
-  const [resultGame, setResultGame] = useState<'win' | 'lose' | null>(null);
-  const [flagCount, setFlagCount] = useState(10);
+  const [resultGame, setResultGame] = useState<ResultGame>(null);
+  const [flagCount, setFlagCount] = useState(36);
   const [time, setTime] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
-  const [bombIndexes, setBombIndexes] = useState<number[]>([]);
-  const [playground, setPlayground] = useState<Playground>(
-    [] as unknown as Playground,
-  );
+  const [playground, setPlayground] = useState<Playground>([] as unknown as Playground);
+  const [loseBombIndex, setLoseBombIndex] = useState<number | null>(null);
   // console.log('playground ', playground);
 
   const handlers = {
@@ -23,6 +20,7 @@ function App() {
       const target = e.target as HTMLDivElement;
       if (target.role === 'cell') {
         const clickedCellIndex = target.dataset.index;
+        let newPlayground = [] as Playground;
 
         if (!startGame) {
           setStartGame(true);
@@ -31,14 +29,21 @@ function App() {
           }, 1000);
           setIntervalId(id);
 
-          // get cell index to avoid hitting the bomb in the first click
           if (clickedCellIndex) {
-            setPlayground(generatePlayground(+clickedCellIndex));
+            newPlayground = generatePlayground(+clickedCellIndex);
           }
         }
 
         if (clickedCellIndex) {
-          openCells(+clickedCellIndex, playground);
+          const copyPlayground = playground.length ? [...playground] : [...newPlayground];
+
+          const result = openCells(+clickedCellIndex, copyPlayground, 'initial');
+          setPlayground(copyPlayground);
+
+          if (result === 'lose') {
+            setResultGame('lose');
+            setLoseBombIndex(+clickedCellIndex);
+          }
         }
       }
     },
@@ -50,6 +55,7 @@ function App() {
       }
       setTime(0);
       setPlayground([]);
+      setResultGame(null);
     },
   };
 
@@ -62,9 +68,17 @@ function App() {
               // children are static, so can safely use the index here
               <Cell key={i} cell="empty" hide data-index={i} />
             ))
-        : playground.map((cell, i) => {
+        : playground.map((cell) => {
             return (
-              <Cell key={i} cell={cell.value} hide={false} data-index={i} />
+              <Cell
+                key={cell.index}
+                cell={cell.value}
+                hide={cell.hide}
+                loseBombIndex={loseBombIndex}
+                resultGame={resultGame}
+                cellIndex={cell.index}
+                data-index={cell.index}
+              />
             );
           });
     },
@@ -77,7 +91,7 @@ function App() {
           <Wrapper>
             <div className={styles.top}>
               <Dial value={flagCount} />
-              <Smile smile="happy" onClick={handlers.gameOver} />
+              <Smile smile="happy" onClick={handlers.gameOver} resultGame={resultGame} />
               <Dial value={time} />
             </div>
 
