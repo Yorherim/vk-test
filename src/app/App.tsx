@@ -4,6 +4,7 @@ import styles from './App.module.scss';
 import { Cell, Container, Dial, Smile, Wrapper } from '../components';
 import { generatePlayground } from '../helpers/generate-playground';
 import { CONSTANTS, Playground } from './types';
+import { openCells } from '../helpers/open-cells';
 
 function App() {
   const [startGame, setStartGame] = useState(false);
@@ -21,6 +22,8 @@ function App() {
     clickCell: (e: MouseEvent) => {
       const target = e.target as HTMLDivElement;
       if (target.role === 'cell') {
+        const clickedCellIndex = target.dataset.index;
+
         if (!startGame) {
           setStartGame(true);
           const id = setInterval(() => {
@@ -29,10 +32,13 @@ function App() {
           setIntervalId(id);
 
           // get cell index to avoid hitting the bomb in the first click
-          const startCellIndex = target.dataset.index;
-          if (startCellIndex) {
-            setPlayground(generatePlayground(+startCellIndex));
+          if (clickedCellIndex) {
+            setPlayground(generatePlayground(+clickedCellIndex));
           }
+        }
+
+        if (clickedCellIndex) {
+          openCells(+clickedCellIndex, playground);
         }
       }
     },
@@ -54,11 +60,13 @@ function App() {
             .fill(0)
             .map((_, i) => (
               // children are static, so can safely use the index here
-              <Cell key={i} cell="hide" data-index={i} />
+              <Cell key={i} cell="empty" hide data-index={i} />
             ))
-        : playground.map((cell, i) => (
-            <Cell key={i} cell={cell} data-index={i} />
-          ));
+        : playground.map((cell, i) => {
+            return (
+              <Cell key={i} cell={cell.value} hide={false} data-index={i} />
+            );
+          });
     },
   };
 

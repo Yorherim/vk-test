@@ -1,4 +1,4 @@
-import { CONSTANTS } from '../app/types';
+import { CONSTANTS } from '../../app/types';
 
 /**
  * function for generate bombs

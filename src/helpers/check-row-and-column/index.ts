@@ -1,14 +1,5 @@
-import { CONSTANTS } from '../app/types';
-
-type LocationCell =
-  | 'top-left'
-  | 'top-middle'
-  | 'top-right'
-  | 'left'
-  | 'right'
-  | 'bottom-left'
-  | 'bottom-middle'
-  | 'bottom-right';
+import { CONSTANTS } from '../../app/types';
+import { LocationCell } from '../get-adjacent-cells/types';
 
 /**
  * Function for check row and column cell.

@@ -1,6 +1,7 @@
-import { generateBombs } from './generate-bombs';
-import { generateCell, PlaygroundWithOnlyBombs } from './generate-cell';
-import { CONSTANTS, Playground } from '../app/types';
+import { generateBombs } from '../generate-bombs';
+import { generateCell } from '../generate-cell';
+import { CONSTANTS, Playground } from '../../app/types';
+import { PlaygroundWithOnlyBombs } from './types';
 
 /**
  * function for generate playground with bombs, empty cells and numbers

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import styles from './cell.module.scss';
 import { CellProps, CellStyle } from './types';
 
-export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
+export const Cell: FC<CellProps> = ({ cell, hide, className, ...rest }) => {
   const cellStyle: CellStyle = {
     '1': styles.cell__one,
     '2': styles.cell__two,
@@ -14,7 +14,6 @@ export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
     '7': styles.cell__seven,
     '8': styles.cell__eight,
 
-    hide: styles.cell__hide,
     empty: styles.cell__empty,
     flag: styles.cell__flag,
     question: styles.cell__question,
@@ -23,5 +22,11 @@ export const Cell: FC<CellProps> = ({ cell, className, ...rest }) => {
     'bomb-error': styles['cell__bomb-error'],
   };
 
-  return <div className={`${styles.cell} ${cellStyle[cell]}`} {...rest} role="cell" />;
+  return (
+    <div
+      className={`${styles.cell} ${hide ? styles.cell__hide : cellStyle[cell]}`}
+      {...rest}
+      role="cell"
+    />
+  );
 };
