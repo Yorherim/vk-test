@@ -18,6 +18,10 @@
   }
   &__flag {
     background-position: -34px -51px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__question {
     background-position: -51px -51px;

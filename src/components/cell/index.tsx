@@ -6,6 +6,7 @@ import { CellProps, CellStyle } from './types';
 export const Cell: FC<CellProps> = ({
   cell,
   hide,
+  flag,
   cellIndex,
   loseBombIndex,
   resultGame,
@@ -38,23 +39,22 @@ export const Cell: FC<CellProps> = ({
     return cellStyle[cell];
   };
   const setHide = () => {
-    if (
-      resultGame === 'lose' &&
-      cell === 'bomb' &&
-      loseBombIndex &&
-      cellIndex &&
-      loseBombIndex !== cellIndex
-    ) {
-      return cellStyle.bomb;
+    if (resultGame === 'lose' && cell === 'bomb' && loseBombIndex && cellIndex) {
+      if (flag) {
+        return cellStyle['bomb-error'];
+      }
+      if (loseBombIndex !== cellIndex) {
+        return cellStyle.bomb;
+      }
     }
+    if (flag) {
+      return cellStyle.flag;
+    }
+
     return styles.cell__hide;
   };
 
   return (
-    <div
-      className={`${styles.cell} ${hide ? setHide() : setCellStyle()}`}
-      {...rest}
-      role="cell"
-    />
+    <div className={`${styles.cell} ${hide ? setHide() : setCellStyle()}`} {...rest} role="cell" />
   );
 };

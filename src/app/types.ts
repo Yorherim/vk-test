@@ -4,6 +4,7 @@ export type CellPlayground = {
   value: Extract<CellValue, 'bomb' | 'empty'> | CellNumber;
   hide: boolean;
   index: number;
+  flag: boolean;
 };
 export type Playground = CellPlayground[];
 

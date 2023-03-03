@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import styles from './App.module.scss';
 import { Cell, Container, Dial, Smile, Wrapper } from '../components';
@@ -8,15 +8,23 @@ import { CONSTANTS, Playground, ResultGame } from './types';
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [resultGame, setResultGame] = useState<ResultGame>(null);
-  const [flagCount, setFlagCount] = useState(36);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(40);
+  const [clock, setClock] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [playground, setPlayground] = useState<Playground>([] as unknown as Playground);
   const [loseBombIndex, setLoseBombIndex] = useState<number | null>(null);
+  const [cellClicked, setCellClicked] = useState<boolean>(false);
   // console.log('playground ', playground);
 
+  useEffect(() => {
+    const minutesPassed = 40 - Math.floor(clock / 60);
+    if (minutesPassed < time) {
+      setTime((prevState) => prevState - 1);
+    }
+  }, [clock, time]);
+
   const handlers = {
-    clickCell: (e: MouseEvent) => {
+    clickCell: (e: MouseEvent<HTMLDivElement>) => {
       const target = e.target as HTMLDivElement;
       if (target.role === 'cell') {
         const clickedCellIndex = target.dataset.index;
@@ -25,7 +33,7 @@ function App() {
         if (!startGame) {
           setStartGame(true);
           const id = setInterval(() => {
-            setTime((prevState) => prevState + 1);
+            setClock((prevState) => prevState + 1);
           }, 1000);
           setIntervalId(id);
 
@@ -47,15 +55,45 @@ function App() {
         }
       }
     },
+
     gameOver: () => {
       setStartGame(false);
       if (intervalId !== null) {
         clearInterval(intervalId);
         setIntervalId(null);
       }
-      setTime(0);
+      setClock(0);
+      setTime(40);
       setPlayground([]);
       setResultGame(null);
+    },
+
+    downMouseCell: () => {
+      setCellClicked(true);
+    },
+    upMouseCell: () => {
+      setCellClicked(false);
+    },
+    leaveMouseFromCell: () => {
+      setCellClicked(false);
+    },
+
+    setFlag: (e: MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      const target = e.target as HTMLDivElement;
+      const cellIndex = target.dataset.index;
+      let newPlayground = [] as Playground;
+
+      if (cellIndex) {
+        if (!startGame) {
+          setStartGame(true);
+          newPlayground = generatePlayground(+cellIndex);
+        }
+
+        const copyPlayground = playground.length ? [...playground] : [...newPlayground];
+        copyPlayground[+cellIndex].flag = true;
+        setPlayground(copyPlayground);
+      }
     },
   };
 
@@ -77,6 +115,7 @@ function App() {
                 loseBombIndex={loseBombIndex}
                 resultGame={resultGame}
                 cellIndex={cell.index}
+                flag={cell.flag}
                 data-index={cell.index}
               />
             );
@@ -90,12 +129,24 @@ function App() {
         <div className={styles.sapper}>
           <Wrapper>
             <div className={styles.top}>
-              <Dial value={flagCount} />
-              <Smile smile="happy" onClick={handlers.gameOver} resultGame={resultGame} />
               <Dial value={time} />
+              <Smile
+                smile="happy"
+                onClick={handlers.gameOver}
+                resultGame={resultGame}
+                cellClicked={cellClicked}
+              />
+              <Dial value={clock} />
             </div>
 
-            <div className={styles.playground} onClick={handlers.clickCell}>
+            <div
+              className={styles.playground}
+              onClick={handlers.clickCell}
+              onMouseDown={handlers.downMouseCell}
+              onMouseUp={handlers.upMouseCell}
+              onMouseLeave={handlers.leaveMouseFromCell}
+              onContextMenu={handlers.setFlag}
+            >
               {renders.playground()}
             </div>
           </Wrapper>
