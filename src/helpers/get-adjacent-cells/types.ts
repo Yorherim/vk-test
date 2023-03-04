@@ -1,4 +1,4 @@
-import { CellPlayground } from '../../app/types';
+import { CellPlayground } from '../../store/types';
 
 export type LocationCell =
   | 'top-left'

@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { CellRightClickType, ResultGame } from '../../app/types';
+import { CellRightClickType, ResultGame } from '../../store/types';
 
 export type CellNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 

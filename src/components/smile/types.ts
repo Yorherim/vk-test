@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { ResultGame } from '../../app/types';
+import { ResultGame } from '../../store/types';
 
 type SmileType = 'happy' | 'happy-clicked' | 'surprised' | 'with-glasses' | 'sad';
 
