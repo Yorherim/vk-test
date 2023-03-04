@@ -1,90 +1,64 @@
 import { MouseEvent, useEffect, useState } from 'react';
 
+import { useStore } from '../store';
 import styles from './App.module.scss';
 import { Cell, Container, Dial, Smile, Wrapper } from '../components';
-import { generatePlayground, openCells } from '../helpers';
-import { CONSTANTS, Playground, ResultGame } from './types';
+import { CONSTANTS } from './types';
 
 function App() {
-  const [startGame, setStartGame] = useState(false);
-  const [resultGame, setResultGame] = useState<ResultGame>(null);
-  const [time, setTime] = useState(CONSTANTS.TIME);
-  const [clock, setClock] = useState(0);
+  const statusGame = useStore((state) => state.statusGame);
+  const time = useStore((state) => state.time);
+  const clock = useStore((state) => state.clock);
+  const loseBombIndex = useStore((state) => state.loseBombIndex);
+  const resultGame = useStore((state) => state.resultGame);
+  const playground = useStore((state) => state.playground);
+
+  const setStartGame = useStore((state) => state.setStartGame);
+  const changeTime = useStore((state) => state.changeTime);
+  const changeClock = useStore((state) => state.changeClock);
+  const setGameOver = useStore((state) => state.setGameOver);
+  const setLoseBombIndex = useStore((state) => state.setLoseBombIndex);
+  const setOpenCells = useStore((state) => state.setOpenCells);
+  const changeCellOnFlagOrQuestion = useStore((state) => state.changeCellOnFlagOrQuestion);
+
   const [intervalId, setIntervalId] = useState<number | null>(null);
-  const [playground, setPlayground] = useState<Playground>([] as unknown as Playground);
-  const [loseBombIndex, setLoseBombIndex] = useState<number | null>(null);
   const [cellClicked, setCellClicked] = useState<boolean>(false);
 
   useEffect(() => {
-    const minutesPassed = CONSTANTS.TIME - Math.floor(clock / 60);
-    if (minutesPassed < time) {
-      setTime((prevState) => prevState - 1);
+    changeTime();
+  }, [changeTime, time]);
 
-      if (minutesPassed === 0) {
-        setResultGame('lose');
-        if (intervalId) {
-          clearInterval(intervalId);
-        }
-      }
+  useEffect(() => {
+    if (resultGame && intervalId) {
+      clearInterval(intervalId);
     }
-  }, [clock, time, intervalId]);
+  }, [resultGame, intervalId]);
 
   const handlers = {
     clickCell: (e: MouseEvent<HTMLDivElement>) => {
       const target = e.target as HTMLDivElement;
       if (target.role === 'cell') {
         const clickedCellIndex = target.dataset.index;
-        let newPlayground = [] as Playground;
-
-        if (!startGame) {
-          setStartGame(true);
-          const id = setInterval(() => {
-            setClock((prevState) => prevState + 1);
-          }, 1000);
-          setIntervalId(id);
-
-          if (clickedCellIndex) {
-            newPlayground = generatePlayground(+clickedCellIndex);
-          }
-        }
 
         if (clickedCellIndex) {
-          const copyPlayground = playground.length ? [...playground] : [...newPlayground];
-
-          if (copyPlayground[+clickedCellIndex].rightClickType === 'flag') {
-            return;
+          if (statusGame !== 'work') {
+            setStartGame(+clickedCellIndex);
+            const id = setInterval(() => {
+              changeClock();
+            }, 1000);
+            setIntervalId(id);
           }
-
-          const result = openCells(+clickedCellIndex, copyPlayground, 'initial');
-          setPlayground(copyPlayground);
-
-          if (result === 'lose') {
-            setResultGame('lose');
-            setLoseBombIndex(+clickedCellIndex);
-            if (intervalId) {
-              clearInterval(intervalId);
-            }
-          }
-          if (result === 'win') {
-            setResultGame('win');
-            if (intervalId) {
-              clearInterval(intervalId);
-            }
-          }
+          setOpenCells(+clickedCellIndex);
         }
       }
     },
 
     gameOver: () => {
-      setStartGame(false);
+      setGameOver();
       if (intervalId) {
         clearInterval(intervalId);
         setIntervalId(null);
       }
-      setClock(0);
-      setTime(CONSTANTS.TIME);
-      setPlayground([]);
-      setResultGame(null);
     },
 
     downMouseCell: () => {
@@ -101,29 +75,12 @@ function App() {
       e.preventDefault();
       const target = e.target as HTMLDivElement;
       const cellIndex = target.dataset.index;
-      let newPlayground = [] as Playground;
 
       if (cellIndex) {
-        if (!startGame) {
-          setStartGame(true);
-          newPlayground = generatePlayground(+cellIndex);
+        if (statusGame !== 'work') {
+          setStartGame(+cellIndex);
         }
-
-        const copyPlayground = playground.length ? [...playground] : [...newPlayground];
-
-        if (copyPlayground[+cellIndex].rightClickType === 'flag') {
-          copyPlayground[+cellIndex].rightClickType = 'question';
-          setPlayground(copyPlayground);
-          return;
-        }
-        if (copyPlayground[+cellIndex].rightClickType === 'question') {
-          copyPlayground[+cellIndex].rightClickType = null;
-          setPlayground(copyPlayground);
-          return;
-        }
-
-        copyPlayground[+cellIndex].rightClickType = 'flag';
-        setPlayground(copyPlayground);
+        changeCellOnFlagOrQuestion(+cellIndex);
       }
     },
   };
