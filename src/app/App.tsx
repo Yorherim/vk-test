@@ -15,9 +15,8 @@ function App() {
 
   const setStartGame = useStore((state) => state.setStartGame);
   const changeTime = useStore((state) => state.changeTime);
-  const changeClock = useStore((state) => state.changeClock);
+  const incrementClock = useStore((state) => state.incrementClock);
   const setGameOver = useStore((state) => state.setGameOver);
-  const setLoseBombIndex = useStore((state) => state.setLoseBombIndex);
   const setOpenCells = useStore((state) => state.setOpenCells);
   const changeCellOnFlagOrQuestion = useStore((state) => state.changeCellOnFlagOrQuestion);
 
@@ -26,7 +25,7 @@ function App() {
 
   useEffect(() => {
     changeTime();
-  }, [changeTime, time]);
+  }, [changeTime, clock]);
 
   useEffect(() => {
     if (resultGame && intervalId) {
@@ -44,7 +43,7 @@ function App() {
           if (statusGame !== 'work') {
             setStartGame(+clickedCellIndex);
             const id = setInterval(() => {
-              changeClock();
+              incrementClock();
             }, 1000);
             setIntervalId(id);
           }
@@ -99,7 +98,7 @@ function App() {
               <Cell
                 key={cell.index}
                 cell={cell.value}
-                // hide={cell.value === 'bomb' ? false : cell.hide}
+                // hide={cell.value === 'bomb' ? false : cell.hide} open mines (for testing win)
                 hide={cell.hide}
                 loseBombIndex={loseBombIndex}
                 resultGame={resultGame}
@@ -125,7 +124,7 @@ function App() {
                 resultGame={resultGame}
                 cellClicked={cellClicked}
               />
-              <Dial value={clock} />
+              <Dial value={clock >= 999 ? 999 : clock} />
             </div>
 
             <div

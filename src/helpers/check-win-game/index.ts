@@ -1,6 +1,14 @@
-import { Playground } from '../../app/types';
+import { Playground } from '../../store/types';
 
-export const checkWinGame = (playground: Playground) => {
+/**
+ * function for check win
+ *
+ * if all (not bombs) playground cells opened - return true (win)
+ *
+ * else return false
+ * @param playground
+ */
+export const checkWinGame = (playground: Playground): boolean => {
   let openedCells = 0;
 
   for (let i = 0; i < playground.length; i++) {

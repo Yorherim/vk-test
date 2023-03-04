@@ -44,7 +44,7 @@ export const useStore = create<Store>()(
         }
       }),
 
-    changeClock: () =>
+    incrementClock: () =>
       set((state) => {
         state.clock += 1;
       }),

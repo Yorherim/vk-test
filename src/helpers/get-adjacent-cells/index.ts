@@ -1,7 +1,7 @@
 import { checkRowAndColumn } from '../check-row-and-column';
-import { Playground } from '../../app/types';
 import { AdjacentCells } from './types';
 import { PlaygroundWithOnlyBombs } from '../generate-playground/types';
+import { Playground } from '../../store/types';
 
 /**
  * function for get adjacent cells

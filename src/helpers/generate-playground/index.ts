@@ -1,7 +1,8 @@
 import { generateBombs } from '../generate-bombs';
 import { generateCell } from '../generate-cell';
-import { CONSTANTS, Playground } from '../../app/types';
+import { CONSTANTS } from '../../app/types';
 import { PlaygroundWithOnlyBombs } from './types';
+import { Playground } from '../../store/types';
 
 /**
  * function for generate playground with bombs, empty cells and numbers
@@ -22,9 +23,7 @@ export const generatePlayground = (startCellIndex: number): Playground => {
   const arrBombIndexes = generateBombs(startCellIndex);
 
   // 2
-  const arrPlaygroundWithOnlyBombs: PlaygroundWithOnlyBombs = Array(
-    CONSTANTS.CELLS_COUNT,
-  )
+  const arrPlaygroundWithOnlyBombs: PlaygroundWithOnlyBombs = Array(CONSTANTS.CELLS_COUNT)
     .fill(null)
     .map((elem, i) => {
       if (arrBombIndexes.includes(i)) {

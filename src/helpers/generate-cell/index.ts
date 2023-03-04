@@ -1,7 +1,7 @@
 import { CellNumber } from '../../components/cell/types';
-import { CellPlayground } from '../../app/types';
 import { getAdjacentCells } from '../get-adjacent-cells';
 import { PlaygroundWithOnlyBombs } from '../generate-playground/types';
+import { CellPlayground } from '../../store/types';
 
 /**
  * function for generate cell - number or empty

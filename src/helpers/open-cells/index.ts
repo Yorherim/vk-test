@@ -1,6 +1,7 @@
-import { CellPlayground, CONSTANTS, Playground } from '../../app/types';
+import { CONSTANTS } from '../../app/types';
 import { getAdjacentCells } from '../get-adjacent-cells';
 import { checkWinGame } from '../check-win-game';
+import { CellPlayground, Playground } from '../../store/types';
 
 function isCellPlayground(cell: CellPlayground | 'bomb' | null): cell is CellPlayground {
   return Boolean(cell) && typeof cell === 'object';
