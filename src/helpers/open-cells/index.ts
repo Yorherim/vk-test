@@ -1,5 +1,6 @@
 import { CellPlayground, CONSTANTS, Playground } from '../../app/types';
 import { getAdjacentCells } from '../get-adjacent-cells';
+import { checkWinGame } from '../check-win-game';
 
 function isCellPlayground(cell: CellPlayground | 'bomb' | null): cell is CellPlayground {
   return Boolean(cell) && typeof cell === 'object';
@@ -25,7 +26,7 @@ export const openCells = (
   cellIndex: number,
   playground: Playground,
   initialClick: 'initial' | 'none' = 'none',
-): void | 'lose' => {
+): void | 'lose' | 'win' => {
   const cell = playground[cellIndex];
 
   // 1
@@ -51,11 +52,21 @@ export const openCells = (
     // 3
     if (typeof cell.value === 'number') {
       playground[cellIndex].hide = false;
+
+      const result = checkWinGame(playground);
+      if (result) {
+        return 'win' as const;
+      }
     }
 
     // 4
     if (playground[cellIndex].value === 'empty') {
       playground[cellIndex].hide = false;
+
+      const result = checkWinGame(playground);
+      if (result) {
+        return 'win' as const;
+      }
 
       const adjacentCells = getAdjacentCells(cellIndex, playground);
 

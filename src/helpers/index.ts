@@ -4,6 +4,7 @@ import { generateCell } from './generate-cell';
 import { generatePlayground } from './generate-playground';
 import { getAdjacentCells } from './get-adjacent-cells';
 import { openCells } from './open-cells';
+import { checkWinGame } from './check-win-game';
 
 export {
   checkRowAndColumn,
@@ -12,4 +13,5 @@ export {
   generatePlayground,
   getAdjacentCells,
   openCells,
+  checkWinGame,
 };

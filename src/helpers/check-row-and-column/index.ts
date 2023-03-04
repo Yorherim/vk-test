@@ -29,16 +29,12 @@ export const checkRowAndColumn = (
   location: LocationCell,
 ): boolean => {
   // 1
-  const currentCellRow =
-    16 - Math.ceil((CONSTANTS.CELLS_COUNT - currentCellIndex) / 16) + 1;
-  const currentCellColumn =
-    16 - ((CONSTANTS.CELLS_COUNT - currentCellIndex - 1) % 16);
+  const currentCellRow = 16 - Math.ceil((CONSTANTS.CELLS_COUNT - currentCellIndex) / 16) + 1;
+  const currentCellColumn = 16 - ((CONSTANTS.CELLS_COUNT - currentCellIndex - 1) % 16);
 
   // 2
-  const verifiableCellRow =
-    16 - Math.ceil((CONSTANTS.CELLS_COUNT - verifiableCellIndex) / 16) + 1;
-  const verifiableCellColumn =
-    16 - ((CONSTANTS.CELLS_COUNT - verifiableCellIndex - 1) % 16);
+  const verifiableCellRow = 16 - Math.ceil((CONSTANTS.CELLS_COUNT - verifiableCellIndex) / 16) + 1;
+  const verifiableCellColumn = 16 - ((CONSTANTS.CELLS_COUNT - verifiableCellIndex - 1) % 16);
 
   // 3
   if (
@@ -54,43 +50,38 @@ export const checkRowAndColumn = (
   switch (location) {
     case 'top-left':
       return (
-        currentCellRow - verifiableCellRow === 1 &&
-        currentCellColumn - verifiableCellColumn === 1
+        currentCellRow - verifiableCellRow === 1 && currentCellColumn - verifiableCellColumn === 1
       );
+
     case 'top-middle':
-      return (
-        currentCellRow - verifiableCellRow === 1 &&
-        currentCellColumn === verifiableCellColumn
-      );
+      return currentCellRow - verifiableCellRow === 1 && currentCellColumn === verifiableCellColumn;
+
     case 'top-right':
       return (
-        currentCellRow - verifiableCellRow === 1 &&
-        currentCellColumn - verifiableCellColumn === -1
+        currentCellRow - verifiableCellRow === 1 && currentCellColumn - verifiableCellColumn === -1
       );
+
     case 'left':
-      return (
-        currentCellRow === verifiableCellRow &&
-        currentCellColumn - verifiableCellColumn === 1
-      );
+      return currentCellRow === verifiableCellRow && currentCellColumn - verifiableCellColumn === 1;
+
     case 'right':
       return (
-        currentCellRow === verifiableCellRow &&
-        currentCellColumn - verifiableCellColumn === -1
+        currentCellRow === verifiableCellRow && currentCellColumn - verifiableCellColumn === -1
       );
+
     case 'bottom-left':
       return (
-        currentCellRow - verifiableCellRow === -1 &&
-        currentCellColumn - verifiableCellColumn === 1
+        currentCellRow - verifiableCellRow === -1 && currentCellColumn - verifiableCellColumn === 1
       );
+
     case 'bottom-middle':
       return (
-        currentCellRow - verifiableCellRow === -1 &&
-        currentCellColumn === verifiableCellColumn
+        currentCellRow - verifiableCellRow === -1 && currentCellColumn === verifiableCellColumn
       );
+
     default:
       return (
-        currentCellRow - verifiableCellRow === -1 &&
-        currentCellColumn - verifiableCellColumn === -1
+        currentCellRow - verifiableCellRow === -1 && currentCellColumn - verifiableCellColumn === -1
       );
   }
 };

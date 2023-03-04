@@ -27,23 +27,15 @@ export const getAdjacentCells = (
       ? arr[cellIndex - 15]
       : null,
 
-    left: checkRowAndColumn(cellIndex, cellIndex - 1, 'left')
-      ? arr[cellIndex - 1]
-      : null,
+    left: checkRowAndColumn(cellIndex, cellIndex - 1, 'left') ? arr[cellIndex - 1] : null,
 
-    right: checkRowAndColumn(cellIndex, cellIndex + 1, 'right')
-      ? arr[cellIndex + 1]
-      : null,
+    right: checkRowAndColumn(cellIndex, cellIndex + 1, 'right') ? arr[cellIndex + 1] : null,
 
     'bottom-left': checkRowAndColumn(cellIndex, cellIndex + 15, 'bottom-left')
       ? arr[cellIndex + 15]
       : null,
 
-    'bottom-middle': checkRowAndColumn(
-      cellIndex,
-      cellIndex + 16,
-      'bottom-middle',
-    )
+    'bottom-middle': checkRowAndColumn(cellIndex, cellIndex + 16, 'bottom-middle')
       ? arr[cellIndex + 16]
       : null,
 

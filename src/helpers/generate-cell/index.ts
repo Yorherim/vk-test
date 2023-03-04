@@ -25,7 +25,7 @@ export const generateCell = (
 ): CellPlayground => {
   // 1
   if (elem === 'bomb') {
-    return { value: 'bomb', hide: true, index: cellIndex, flag: false };
+    return { value: 'bomb', hide: true, index: cellIndex, rightClickType: null };
   }
 
   let nearBombs = 0;
@@ -41,6 +41,6 @@ export const generateCell = (
   }
 
   return nearBombs === 0
-    ? { value: 'empty' as const, hide: true, index: cellIndex, flag: false }
-    : { value: nearBombs as CellNumber, hide: true, index: cellIndex, flag: false };
+    ? { value: 'empty' as const, hide: true, index: cellIndex, rightClickType: null }
+    : { value: nearBombs as CellNumber, hide: true, index: cellIndex, rightClickType: null };
 };

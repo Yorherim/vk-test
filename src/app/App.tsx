@@ -8,20 +8,26 @@ import { CONSTANTS, Playground, ResultGame } from './types';
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [resultGame, setResultGame] = useState<ResultGame>(null);
-  const [time, setTime] = useState(40);
+  const [time, setTime] = useState(CONSTANTS.TIME);
   const [clock, setClock] = useState(0);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const [playground, setPlayground] = useState<Playground>([] as unknown as Playground);
   const [loseBombIndex, setLoseBombIndex] = useState<number | null>(null);
   const [cellClicked, setCellClicked] = useState<boolean>(false);
-  // console.log('playground ', playground);
 
   useEffect(() => {
-    const minutesPassed = 40 - Math.floor(clock / 60);
+    const minutesPassed = CONSTANTS.TIME - Math.floor(clock / 60);
     if (minutesPassed < time) {
       setTime((prevState) => prevState - 1);
+
+      if (minutesPassed === 0) {
+        setResultGame('lose');
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+      }
     }
-  }, [clock, time]);
+  }, [clock, time, intervalId]);
 
   const handlers = {
     clickCell: (e: MouseEvent<HTMLDivElement>) => {
@@ -45,12 +51,25 @@ function App() {
         if (clickedCellIndex) {
           const copyPlayground = playground.length ? [...playground] : [...newPlayground];
 
+          if (copyPlayground[+clickedCellIndex].rightClickType === 'flag') {
+            return;
+          }
+
           const result = openCells(+clickedCellIndex, copyPlayground, 'initial');
           setPlayground(copyPlayground);
 
           if (result === 'lose') {
             setResultGame('lose');
             setLoseBombIndex(+clickedCellIndex);
+            if (intervalId) {
+              clearInterval(intervalId);
+            }
+          }
+          if (result === 'win') {
+            setResultGame('win');
+            if (intervalId) {
+              clearInterval(intervalId);
+            }
           }
         }
       }
@@ -58,12 +77,12 @@ function App() {
 
     gameOver: () => {
       setStartGame(false);
-      if (intervalId !== null) {
+      if (intervalId) {
         clearInterval(intervalId);
         setIntervalId(null);
       }
       setClock(0);
-      setTime(40);
+      setTime(CONSTANTS.TIME);
       setPlayground([]);
       setResultGame(null);
     },
@@ -78,7 +97,7 @@ function App() {
       setCellClicked(false);
     },
 
-    setFlag: (e: MouseEvent<HTMLDivElement>) => {
+    setFlagOrQuestion: (e: MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
       const target = e.target as HTMLDivElement;
       const cellIndex = target.dataset.index;
@@ -91,7 +110,19 @@ function App() {
         }
 
         const copyPlayground = playground.length ? [...playground] : [...newPlayground];
-        copyPlayground[+cellIndex].flag = true;
+
+        if (copyPlayground[+cellIndex].rightClickType === 'flag') {
+          copyPlayground[+cellIndex].rightClickType = 'question';
+          setPlayground(copyPlayground);
+          return;
+        }
+        if (copyPlayground[+cellIndex].rightClickType === 'question') {
+          copyPlayground[+cellIndex].rightClickType = null;
+          setPlayground(copyPlayground);
+          return;
+        }
+
+        copyPlayground[+cellIndex].rightClickType = 'flag';
         setPlayground(copyPlayground);
       }
     },
@@ -104,18 +135,19 @@ function App() {
             .fill(0)
             .map((_, i) => (
               // children are static, so can safely use the index here
-              <Cell key={i} cell="empty" hide data-index={i} />
+              <Cell key={i} cell="empty" hide data-index={i} aria-disabled />
             ))
         : playground.map((cell) => {
             return (
               <Cell
                 key={cell.index}
                 cell={cell.value}
+                // hide={cell.value === 'bomb' ? false : cell.hide}
                 hide={cell.hide}
                 loseBombIndex={loseBombIndex}
                 resultGame={resultGame}
                 cellIndex={cell.index}
-                flag={cell.flag}
+                rightClickType={cell.rightClickType}
                 data-index={cell.index}
               />
             );
@@ -140,12 +172,14 @@ function App() {
             </div>
 
             <div
-              className={styles.playground}
+              className={`${styles.playground} ${
+                resultGame === 'win' || resultGame === 'lose' ? styles.playground_disabled : ''
+              }`}
               onClick={handlers.clickCell}
               onMouseDown={handlers.downMouseCell}
               onMouseUp={handlers.upMouseCell}
               onMouseLeave={handlers.leaveMouseFromCell}
-              onContextMenu={handlers.setFlag}
+              onContextMenu={handlers.setFlagOrQuestion}
             >
               {renders.playground()}
             </div>

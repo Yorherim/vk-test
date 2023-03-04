@@ -6,7 +6,7 @@ import { CellProps, CellStyle } from './types';
 export const Cell: FC<CellProps> = ({
   cell,
   hide,
-  flag,
+  rightClickType,
   cellIndex,
   loseBombIndex,
   resultGame,
@@ -32,7 +32,7 @@ export const Cell: FC<CellProps> = ({
   };
 
   const setCellStyle = () => {
-    if (loseBombIndex && cellIndex && loseBombIndex === cellIndex) {
+    if (resultGame === 'lose' && loseBombIndex && cellIndex && loseBombIndex === cellIndex) {
       return cellStyle['bomb-red'];
     }
 
@@ -40,15 +40,18 @@ export const Cell: FC<CellProps> = ({
   };
   const setHide = () => {
     if (resultGame === 'lose' && cell === 'bomb' && loseBombIndex && cellIndex) {
-      if (flag) {
+      if (rightClickType === 'flag') {
         return cellStyle['bomb-error'];
       }
       if (loseBombIndex !== cellIndex) {
         return cellStyle.bomb;
       }
     }
-    if (flag) {
+    if (rightClickType === 'flag') {
       return cellStyle.flag;
+    }
+    if (rightClickType === 'question') {
+      return cellStyle.question;
     }
 
     return styles.cell__hide;
